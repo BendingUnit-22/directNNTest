@@ -132,7 +132,7 @@ def main(args):
     model, data, num_class, model_path = model_data_config[0], model_data_config[1], model_data_config[2], model_data_config[3]
     
     if not os.path.exists(model_path):
-        train_model(args, data, model, num_class)
+        train_model(data, model)
     else:
         print("Load trained model...")
         model.load_model()

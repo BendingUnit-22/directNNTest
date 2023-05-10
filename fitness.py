@@ -1,12 +1,8 @@
 import numpy as np
-from datetime import datetime 
 
 import torch
-import torch.nn as nn
 import torch.nn.functional as F
-from torch.utils.data import DataLoader
 
-from torchvision import datasets, transforms
 from diversity import get_pred_label
 
 class Fitness:

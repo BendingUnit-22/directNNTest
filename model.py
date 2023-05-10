@@ -1,13 +1,11 @@
 import numpy as np
-from datetime import datetime 
 from tqdm import tqdm
 
 import torch
 import torch.nn as nn
 import torch.nn.functional as F
-from torchvision import models
 from torch.optim import lr_scheduler
-from torchvision.models.feature_extraction import get_graph_node_names, create_feature_extractor
+from torchvision.models.feature_extraction import create_feature_extractor
 
 
 def feature_extractor(model, modeltype):

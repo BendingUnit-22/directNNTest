@@ -1,15 +1,14 @@
 import argparse
 import model
 import data
-from model import Cifar_CNN
 
 def create_args():
     parser = argparse.ArgumentParser()
 
     parser.add_argument("--model", 
         nargs='?', 
-        const="alexnet", 
-        default="alexnet", 
+        const="vgg", 
+        default="vgg", 
         choices=['vgg', 'resnet9', 'resnet18'], 
         help="which model to use")
     
@@ -27,7 +26,7 @@ def create_args():
     
     parser.add_argument("--test_batch_size", 
         type=int,
-        default=2000,
+        default=1000,
         help="how large is a batch during training")
 
     parser.add_argument("--experiment", 
@@ -86,7 +85,7 @@ def create_args():
     
     parser.add_argument("--epochs", 
         type=int,
-        default=50,
+        default=100,
         help="how many epochs used for training")
     
     parser.add_argument("--topk", 

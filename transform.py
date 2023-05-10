@@ -1,16 +1,5 @@
-import numpy as np
-from datetime import datetime 
-
 import torch
-import torch.nn as nn
-import torch.nn.functional as F
-from torch.utils.data import DataLoader
-
-from torchvision import datasets, transforms
-
-from utils.pixmix_utils import pixmix
-from utils.augmix_utils import aug
-import time
+from torchvision import transforms
 
 
 class AdvTransf:
@@ -22,7 +11,6 @@ class AdvTransf:
         #This function generates a random perturbation within the lp ball of radius, with shape the same as X
         if self.light:
            return self.random_trans_light(X, radius)
-        #start = time.time()
         x_shape = X.shape
         flattened_X = torch.flatten(X, start_dim=1)
         delta = torch.rand(flattened_X.shape)-0.5
@@ -34,13 +22,7 @@ class AdvTransf:
         clipped_ratios = torch.max(1/radius*torch.ones(ratios.shape), ratios)
         normalizer = clipped_ratios*norms
         delta = delta/(normalizer[:, None])
-        #if self.infty:
-        #   print("delta linf norm is", torch.norm(delta, p=torch.inf, dim=1))
-        #else:
-        #   print("delta l2 norm is", torch.norm(delta, p=2, dim=1))
         delta = torch.reshape(delta, x_shape)
-        #end = time.time()
-        #print(end - start)
         return delta
     
     def random_trans_light(self, X, radius):
@@ -48,7 +30,6 @@ class AdvTransf:
       X_shape = X.shape
       x = X[0]
       x_shape = x.shape
-      #print(x_shape)
       flattened_X = torch.flatten(x, start_dim=0)
       delta = torch.rand(flattened_X.shape)-0.5     
       if self.infty:
@@ -62,8 +43,6 @@ class AdvTransf:
       delta = torch.reshape(delta, x_shape)
       delta = torch.unsqueeze(delta, 0)
       delta = torch.cat(X_shape[0]*[delta], 0)
-      #end = time.time()
-      #print(end - start)
       return delta
 
 
@@ -153,22 +132,18 @@ class DataGen:
     self.linf_rad = linf_rad
 
   def lp_gen(self, x):
-    #print("generate lp deltas")
     deltas = []
     for _ in range(self.linf_nums):
-      #print("Generate a new linf delta...")
       delta = self.linf_trans.random_trans(x, self.linf_rad)
       deltas.append(delta)
 
     for _ in range(self.l2_nums):
-      #print("Generate a new l2 delta...")
       delta = self.l2_trans.random_trans(x, self.l2_rad)
       deltas.append(delta)
     print("Size of lp deltas:", len(deltas))
     return deltas
   
   def benign_gen(self, x):
-     #print("generate benign deltas")
      return self.benign_trans.gen_benign(x)
   
   def mixed_gen(self, x):
