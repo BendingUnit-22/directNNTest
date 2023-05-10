@@ -85,7 +85,7 @@ def create_args():
     
     parser.add_argument("--epochs", 
         type=int,
-        default=100,
+        default=50,
         help="how many epochs used for training")
     
     parser.add_argument("--topk", 

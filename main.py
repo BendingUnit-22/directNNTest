@@ -142,7 +142,7 @@ def main(args):
             print(f'Accuracy of the network on the 10000 test images: {acc} %')
 
     gen = create_datagen(args)
-    profile_path = "profiles/"+args.model+"_"+args.dataset+"_"+args.training+"_"+str(args.epochs)+".prof"
+    profile_path = "profiles/"+args.model+"_"+args.dataset+"_"+str(args.epochs)+".prof"
     score_function = Fitness(model, num_class, device)
     ats = ATSDiversity(model, num_class, device)
     if args.bd_layer == "int":
