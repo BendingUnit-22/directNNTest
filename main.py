@@ -9,7 +9,7 @@ import random
 from transform import DataGen
 from fitness import Fitness
 from args import create_args, parse_ranking_function, parse_data_model
-from utils import lp_norms, calc_similarity, weight_avg
+from utils import lp_norms, calc_similarity, weight_avg, get_pred_label
 import os
 from diversity import ATSDiversity, BoostingDiversity, DeepGauge
 
@@ -94,6 +94,8 @@ def testing_experiment(args, model, data, score_function, ats, bd, dg, gen):
     #print(acc)
     weights = []
     for x, y in data.valid_loader:
+        if args.test_mode == "metamorphic":
+            y = get_pred_label(model, x, device)
         weights.append(x.shape[0])
         if args.testing == 'bd' or args.testing == 'dg':
             test = Testing(model, x, y, ranking, args.iterations, args.topk, device, diversity=True)

@@ -33,7 +33,7 @@ def create_args():
         nargs='?', 
         const="ranking", 
         default="ranking", 
-        choices=['ranking', 'testing', 'robustify'], 
+        choices=['ranking', 'testing'], 
         help="which experiment to run")
     
     parser.add_argument("--ranking_method1", 
@@ -116,6 +116,13 @@ def create_args():
         default="int", 
         choices=['int', 'final'], 
         help="which layer to use for boosting diversity")
+    
+    parser.add_argument("--test_mode", 
+        nargs='?', 
+        const="truth", 
+        default="truth", 
+        choices=['truth', 'metamorphic'], 
+        help="which testing mode to use")
     
     return parser
 

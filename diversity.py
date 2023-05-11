@@ -7,6 +7,7 @@ import scipy.stats
 import torch
 from ATS.ATS import ATS
 from model import feature_extractor
+from utils import get_pred_label
 
 def gen_delta(x, deltas, idx):
     #given the idx of deltas, generate the x_transform
@@ -300,13 +301,6 @@ class BoostingDiversity:
     # picked_deltas: list of len topk, each element is of dim = (bs, 3, 32, 32) (same as x)
         return indices, picked_deltas
 
-
-def get_pred_label(model, X, device):
-    model.eval()
-    X = X.to(device)
-    outputs = model.forward(X).detach().cpu()
-    _, predicted = torch.max(outputs.data, 1)
-    return predicted
 
 
 class ATSDiversity:

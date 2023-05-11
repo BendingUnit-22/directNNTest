@@ -1,6 +1,14 @@
 import torch
 import rbo
 
+
+def get_pred_label(model, X, device):
+    model.eval()
+    X = X.to(device)
+    outputs = model.forward(X).detach().cpu()
+    _, predicted = torch.max(outputs.data, 1)
+    return predicted
+
 def lp_norms(deltas):
     l2_norms = []
     linfty_norms = []
