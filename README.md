@@ -4,7 +4,9 @@ This repo contains the code used for the evaluation in an ASE submission.
 ## Prerequisites
 We first create a conda environment and then install some necessary packages:
 
-`conda create --n test python=3.8`
+`conda create -n test python=3.8`
+
+`conda activate test`
 
 `pip install -r requirements.txt`
 
